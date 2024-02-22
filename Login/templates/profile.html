@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Include your CSS file -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("/static/photo.jpg");
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        
+        .content {
+            position: relative;
+            padding: 20px;
+        }
+        
+        .about-me, .contact-me {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 50px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .about-me h2, .contact-me h2 {
+            margin-top: 0;
+        }
+        
+        .contact-me a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .contact-me a:hover {
+            text-decoration: underline;
+        }
+        
+        .logout-link {
+            color: white;
+            text-decoration: none;
+            background-color: rgba(50, 147, 245, 0.547);
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        /* Added styles for profile menu */
+        .profile-menu {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            padding: 20px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .profile-menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .profile-menu ul li {
+            margin-bottom: 20px;
+        }
+
+        .profile-menu ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .profile-menu ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Added styles for profile dropdown */
+        .profile-dropdown {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        /* Added styles for profile image */
+        .profile-image {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .profile-image img {
+            width: 150%;
+            height: 150%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="about-me">
+            <h2>About Me</h2>
+            <p>Hi everyone, My name is Hamidreza Sekandari from Iran and I am very happy to see you here. Have a nice day.</p>
+        </div>
+        <div class="contact-me">
+            <h2>Contact Me</h2>
+            <p>Email: <a href="mailto:hamidtest66@gmail.com">hamidtest66@gmail.com</a></p>
+            <p>Personal Website: <a href="https://sekandari.wixsite.com/it-security">sekandari.wixsite.com/it-security</a></p>
+            <p>GitHub: <a href="https://github.com/sekandarihamid">github.com/sekandarihamid</a></p>
+        </div>
+        <div class="profile-dropdown">
+            <a href="#" id="profile-button" class="logout-link">My Profile</a>
+            <div class="profile-menu" id="profile-menu">
+                <ul>
+                    <li><a href="#" id="upload-image-button">Upload Image</a></li>
+                    <li><a href="#">Change Password</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <input type="file" id="file-input" style="display: none;">
+        <div class="profile-image" id="profile-image"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('file-input');
+            const profileImage = document.getElementById('profile-image');
+            const uploadImageButton = document.getElementById('upload-image-button');
+
+            fileInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const imageURL = e.target.result;
+                        profileImage.innerHTML = `<img src="${imageURL}" alt="Profile Image">`;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            const profileButton = document.getElementById('profile-button');
+            const profileMenu = document.getElementById('profile-menu');
+
+            profileButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                profileMenu.style.display = (profileMenu.style.display === 'block') ? 'none' : 'block';
+            });
+
+            uploadImageButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                fileInput.click();
+            });
+        });
+    </script>
+</body>
+</html>
